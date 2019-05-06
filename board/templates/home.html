@@ -4,6 +4,8 @@
   <li class="breadcrumb-item active">Boards</li>
 {% endblock %}
 
+
+
 {% block content %}
   <table class="table">
     <thead class="thead-inverse">
@@ -21,9 +23,19 @@
             <a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a>
             <small class="text-muted d-block">{{ board.description }}</small>
           </td>
-          <td class="align-middle">0</td>
-          <td class="align-middle">0</td>
-          <td></td>
+          <td class="align-middle">
+            {{ board.get_posts_count }}
+          </td>
+          <td class="align-middle">
+            {{ board.topics.count }}
+          </td>
+          <td class="align-middle">
+            <small>
+                <a href="{% url 'topic_posts' 1  1  %}">
+                 
+                </a>
+              </small>
+          </td>
         </tr>
       {% endfor %}
     </tbody>

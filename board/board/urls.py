@@ -25,9 +25,34 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     #url(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    
+    url(r'^logout/$',auth_views.logout, {'template_name': 'logout.html'}, name='logout'),
     url(r'^signup/$', accounts_views.signup, name='signup'),
     url(r'^boards/(?P<pk>\d+)/$', views.board_topics, name='board_topics'),
     url(r'^boards/(?P<pk>\d+)/new/$', views.new_topic, name='new_topic'),
     url(r'^admin/', admin.site.urls),
-]
+
+    url(r'^reset/$',auth_views.password_reset ,{'template_name':'password_reset.html',
+        'email_template_name':'password_reset_email.html', 
+    'subject_template_name':'password_reset_subject.txt  '},
+  
+    name='password_reset'),
+    url(r'^reset/done/$',
+    auth_views.password_reset_done,{'template_name':'password_reset_done.html'},
+    name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+    auth_views.password_reset_confirm ,{'template_name':'password_reset_confirm.html'},
+    name='password_reset_confirm'),
+    url(r'^reset/complete/$',
+    auth_views.password_reset_complete ,{'template_name':'password_reset_complete.html'},
+    name='password_reset_complete'),
+    url(r'^settings/password/$', auth_views.password_change,{'template_name':'password_change.html'},
+    name='password_change'),
+    url(r'^settings/password/done/$', auth_views.password_change_done,{'template_name':'password_change_done.html'},
+    name='password_change_done'),
+    url(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/$', views.topic_posts, name='topic_posts'),
+    url(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/reply/$', views.reply_topic, name='reply_topic'),
+    url(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/posts/(?P<post_pk>\d+)/edit/$',
+        views.PostUpdateView.as_view(), name='edit_post'),
+   
+        
+        ]
